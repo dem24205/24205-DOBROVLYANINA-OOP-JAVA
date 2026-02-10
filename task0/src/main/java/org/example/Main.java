@@ -1,14 +1,11 @@
 package org.example;
 
 //0 допустим на первом месте в коде
-//не менее одной попытки
-//создать репозиторий и склонировать его
-//запушить код
 
 public class Main {
     public static void main(String[] args) {
-        int attempts = 10;
-        int codeLength = 6;
+        int attempts = 4;
+        int codeLength = 4;
         try {
             Game game = new Game(attempts, codeLength);
             game.run();
