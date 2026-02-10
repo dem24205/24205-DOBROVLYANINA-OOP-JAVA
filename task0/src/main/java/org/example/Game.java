@@ -1,23 +1,19 @@
 package org.example;
 
 public class Game {
-    private static final int MIN_ATTEMPTS = 1;
     private final String answer;
     private final int attemptsNum;
     private boolean isGameWon;
     private final InputHandler inputHandler;
     private Guess guess;
 
-    public Game(int attemptsNum, int digitsNum) {
-        if (attemptsNum < MIN_ATTEMPTS) {
-            throw new IllegalArgumentException("Incorrect number of attempts");
-        }
-        Generator gen = new Generator(digitsNum);
-        answer = gen.generate();
-        this.attemptsNum = attemptsNum;
+    public Game(GameConfig config) {
+        Generator gen = new Generator(config.getCodeLength());
+        this.answer = gen.generate();
+        this.attemptsNum = config.getAttemptsNum();
         this.isGameWon = false;
-        inputHandler = new InputHandler(answer.length());
-        guess = new Guess(0, 0);
+        this.inputHandler = new InputHandler(answer.length());
+        this.guess = new Guess(0, 0);
     }
 
     private void printGreeting() {
@@ -43,9 +39,15 @@ public class Game {
         System.out.println("The secret code was: " + answer);
     }
 
+    private void printAttempt(int attempt) {
+        System.out.println("Attempt: " + attempt);
+    }
+
     public void run() {
         printGreeting();
         for (int i = 0; i < attemptsNum; ++i) {
+            int attempt = i + 1;
+            printAttempt(attempt);
             String inputCode = inputHandler.readPlayerInput();
             if (answer.equals(inputCode)) {
                 isGameWon = true;

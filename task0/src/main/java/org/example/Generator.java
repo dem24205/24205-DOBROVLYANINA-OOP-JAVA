@@ -5,21 +5,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class Generator {
-    private static final int MAX_DIGITS = 10;
-    private static final int MIN_DIGITS = 1;
     private static final int TOTAL_DIGITS = 10;
-
     private final int digitsNumber;
 
-    private void validateDigitsNumber(int digitsNumber) {
-        if (digitsNumber > MAX_DIGITS ||
-        digitsNumber < MIN_DIGITS) {
-            throw new IllegalArgumentException("Incorrect length of secret code");
-        }
-    }
-
     public Generator(int digitsNumber){
-        validateDigitsNumber(digitsNumber);
         this.digitsNumber = digitsNumber;
     }
 

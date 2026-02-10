@@ -8,13 +8,5 @@ public class GeneratorTest {
         Generator gen = new Generator(5);
         String code = gen.generate();
         assertEquals(5, code.length());
-        System.out.println(code);
-    }
-
-    @Test
-    void exceptionTest() {
-        assertThrows(IllegalArgumentException.class, () -> new Generator(-1));
-        assertThrows(IllegalArgumentException.class, () -> new Generator(11));
-        assertThrows(IllegalArgumentException.class, () -> new Generator(0));
     }
 }
