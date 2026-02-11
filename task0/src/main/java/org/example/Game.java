@@ -9,19 +9,8 @@ public class Game {
     private boolean isGameWon;
     private final InputHandler inputHandler;
     private Guess guess;
+    private static final Logger logger = LoggerManager.getLogger(Game.class.getName());
 
-    private static final Logger logger = Logger.getLogger(Game.class.getName());
-
-    static {
-        try {
-            FileHandler fileHandler = new FileHandler("game.log", false);
-            fileHandler.setFormatter(new SimpleFormatter());
-            logger.addHandler(fileHandler);
-            logger.setUseParentHandlers(false);
-        } catch (IOException e) {
-            System.err.println("Failed to initialize logger: " + e.getMessage());
-        }
-    }
     public Game(GameConfig config) {
         Generator gen = new Generator(config.getCodeLength());
         this.answer = gen.generate();
