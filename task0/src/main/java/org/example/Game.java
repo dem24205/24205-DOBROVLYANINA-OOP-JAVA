@@ -1,5 +1,8 @@
 package org.example;
 
+import java.io.IOException;
+import java.util.logging.*;
+
 public class Game {
     private final String answer;
     private final int attemptsNum;
@@ -7,6 +10,18 @@ public class Game {
     private final InputHandler inputHandler;
     private Guess guess;
 
+    private static final Logger logger = Logger.getLogger(Game.class.getName());
+
+    static {
+        try {
+            FileHandler fileHandler = new FileHandler("game.log", false);
+            fileHandler.setFormatter(new SimpleFormatter());
+            logger.addHandler(fileHandler);
+            logger.setUseParentHandlers(false);
+        } catch (IOException e) {
+            System.err.println("Failed to initialize logger: " + e.getMessage());
+        }
+    }
     public Game(GameConfig config) {
         Generator gen = new Generator(config.getCodeLength());
         this.answer = gen.generate();
@@ -14,6 +29,10 @@ public class Game {
         this.isGameWon = false;
         this.inputHandler = new InputHandler(answer.length());
         this.guess = new Guess(0, 0);
+        logger.info("New game is started");
+        logger.info("Generated code: " + answer);
+        logger.info("Code length: " + answer.length());
+        logger.info("Attempts: " + attemptsNum);
     }
 
     private void printGreeting() {
@@ -44,21 +63,32 @@ public class Game {
     }
 
     public void run() {
+        logger.info("Session start");
         printGreeting();
         for (int i = 0; i < attemptsNum; ++i) {
             int attempt = i + 1;
             printAttempt(attempt);
             String inputCode = inputHandler.readPlayerInput();
+            logger.info("Attempt #" + attempt + ": " + inputCode);
             if (answer.equals(inputCode)) {
                 isGameWon = true;
+                logger.info("Victory");
+                logger.info("Number of attempts was needed: " + attempt);
                 printWinMessage();
                 return;
             }
             else {
                 this.guess = GameEngine.calculateBullsAndCows(answer, inputCode);
+                logger.info("Result: "
+                        + guess.getBulls() + " bulls, "
+                        + guess.getCows() + " cows");
                 printHint();
             }
         }
-        if (!isGameWon) printLoseMessage();
+        if (!isGameWon) {
+            logger.info("Defeat");
+            printLoseMessage();
+        }
+        logger.info("Session end");
     }
 }
