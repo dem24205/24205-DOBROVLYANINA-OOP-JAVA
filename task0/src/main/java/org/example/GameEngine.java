@@ -1,6 +1,13 @@
 package org.example;
 
 public class GameEngine {
+    /**
+     * Подсчитывает быков и коров для пары загаданного числа и предположения
+     * Бык - цифра на своем месте, корова - цифра есть, но не на своем месте
+     * @param answer загаданное число (строка цифр)
+     * @param guess предположение игрока (строка цифр)
+     * @return объект Guess с количеством быков и коров
+     */
     public static Guess calculateBullsAndCows(String answer, String guess) {
         int bulls = 0;
         int cows = 0;

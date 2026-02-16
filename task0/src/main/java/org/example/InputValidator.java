@@ -10,22 +10,11 @@ public class InputValidator {
         this.answerLength = length;
     }
 
-    private boolean validatePermissibleSymbols(String input) {
-        for (char c : input.toCharArray()) {
-            if (!Character.isDigit(c)) return false;
-        }
-        return true;
-    }
-
-    private boolean validateUniqueDigits(String input) {
-        Set<Character> seen = new HashSet<>();
-        for (char c : input.toCharArray()) {
-            if (seen.contains(c)) return false;
-            seen.add(c);
-        }
-        return true;
-    }
-
+    /**
+     * Проверяет корректность введенного кода
+     * @param input строка для проверки
+     * @return ValidationResult с результатом проверки
+     */
     public ValidationResult validate(String input) {
         if (input == null) {
             return ValidationResult.failure("Error: empty input");
@@ -43,6 +32,25 @@ public class InputValidator {
         return ValidationResult.success(input);
     }
 
+    private boolean validatePermissibleSymbols(String input) {
+        for (char c : input.toCharArray()) {
+            if (!Character.isDigit(c)) return false;
+        }
+        return true;
+    }
+
+    private boolean validateUniqueDigits(String input) {
+        Set<Character> seen = new HashSet<>();
+        for (char c : input.toCharArray()) {
+            if (seen.contains(c)) return false;
+            seen.add(c);
+        }
+        return true;
+    }
+
+    /**
+     * Результат валидации: успех/ошибка с сообщением
+     */
     public static class ValidationResult {
         private final boolean isValid;
         private final String errorMessage;

@@ -1,6 +1,5 @@
 package org.example;
 
-import java.io.IOException;
 import java.util.logging.*;
 
 public class Game {
@@ -24,33 +23,10 @@ public class Game {
         logger.info("Attempts: " + attemptsNum);
     }
 
-    private void printGreeting() {
-        System.out.println("Welcome to Cows and Bulls game!");
-        System.out.println("Try to guess " + answer.length() + "-digit code.");
-        System.out.println("You have " + attemptsNum + " attempts.");
-        System.out.println("Good luck!");
-    }
-
-    private void printHint() {
-        System.out.println("Number of bulls: " + this.guess.getBulls() + "\n" +
-                "Number of cows: " + this.guess.getCows() + "\n");
-    }
-
-    private void printWinMessage() {
-        System.out.println("Congratulations!");
-        System.out.println("You guessed the code: " + answer);
-    }
-
-    private void printLoseMessage() {
-        System.out.println("Game over!");
-        System.out.println("You've used all attempts!");
-        System.out.println("The secret code was: " + answer);
-    }
-
-    private void printAttempt(int attempt) {
-        System.out.println("Attempt: " + attempt);
-    }
-
+    /**
+     * Запускает основной игровой цикл
+     * Игрок вводит числа, получает подсказки, пока не угадает код или не кончатся попытки
+     */
     public void run() {
         logger.info("Session start");
         printGreeting();
@@ -79,5 +55,32 @@ public class Game {
             printLoseMessage();
         }
         logger.info("Session end");
+    }
+
+    private void printGreeting() {
+        System.out.println("Welcome to Cows and Bulls game!");
+        System.out.println("Try to guess " + answer.length() + "-digit code.");
+        System.out.println("You have " + attemptsNum + " attempts.");
+        System.out.println("Good luck!");
+    }
+
+    private void printHint() {
+        System.out.println("Number of bulls: " + this.guess.getBulls() + "\n" +
+                "Number of cows: " + this.guess.getCows() + "\n");
+    }
+
+    private void printWinMessage() {
+        System.out.println("Congratulations!");
+        System.out.println("You guessed the code: " + answer);
+    }
+
+    private void printLoseMessage() {
+        System.out.println("Game over!");
+        System.out.println("You've used all attempts!");
+        System.out.println("The secret code was: " + answer);
+    }
+
+    private void printAttempt(int attempt) {
+        System.out.println("Attempt: " + attempt);
     }
 }

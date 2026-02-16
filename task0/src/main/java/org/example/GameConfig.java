@@ -1,5 +1,10 @@
 package org.example;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+//-d=6 -a=3
+
 public class GameConfig {
     private final int codeLength;
     private final int attemptsNum;
@@ -7,9 +12,10 @@ public class GameConfig {
     private static final int DEFAULT_CODE_LENGTH = 4;
     private static final int DEFAULT_ATTEMPTS_NUM = 5;
 
-    private static final int MAX_DIGITS = 10;
-    private static final int MIN_DIGITS = 2;
+    private static final int MAX_DIGITS = 6;
+    private static final int MIN_DIGITS = 3;
     private static final int MIN_ATTEMPTS = 1;
+    private static final int MAX_ATTEMPTS = 15;
 
     private GameConfig(int codeLength, int attemptsNum) {
         this.codeLength = codeLength;
@@ -22,10 +28,10 @@ public class GameConfig {
 
     private static void validateArgs(int codeLength, int attemptsNum) {
         if (codeLength > MAX_DIGITS || codeLength < MIN_DIGITS) {
-            throw new IllegalArgumentException("Incorrect code length");
+            throw new IllegalArgumentException("Code length must be between " + MIN_DIGITS + " and " + MAX_DIGITS);
         }
-        if (attemptsNum < MIN_ATTEMPTS) {
-            throw new IllegalArgumentException("Incorrect number of attempts");
+        if (attemptsNum < MIN_ATTEMPTS || attemptsNum > MAX_ATTEMPTS) {
+            throw new IllegalArgumentException("Number of attempts must be between " + MIN_ATTEMPTS + " and " + MAX_ATTEMPTS);
         }
     }
 
@@ -33,19 +39,27 @@ public class GameConfig {
         if (args.length == 0) {
             return defaultConfig();
         }
-        if (args.length != 2) {
-            throw new IllegalArgumentException("Incorrect number of args");
+
+        int codeLength = DEFAULT_CODE_LENGTH;
+        int attemptsNum = DEFAULT_ATTEMPTS_NUM;
+        Pattern codePattern = Pattern.compile("-d=(\\d+)");
+        Pattern attemptsPattern = Pattern.compile("-a=(\\d+)");
+
+        for (String arg : args) {
+            Matcher codeMatcher = codePattern.matcher(arg);
+            Matcher attemptsMatcher = attemptsPattern.matcher(arg);
+            if (codeMatcher.matches()) {
+                codeLength = Integer.parseInt(codeMatcher.group(1));
+            } else if (attemptsMatcher.matches()) {
+                attemptsNum = Integer.parseInt(attemptsMatcher.group(1));
+            } else {
+                throw new IllegalArgumentException("Invalid argument format: " + arg +
+                        ". Expected -d=X or -a=X");
+            }
         }
 
-        try {
-            int codeLength = Integer.parseInt(args[0]);
-            int attemptsNum = Integer.parseInt(args[1]);
-            validateArgs(codeLength, attemptsNum);
-            return new GameConfig(codeLength, attemptsNum);
-
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Only digits allowed as args");
-        }
+        validateArgs(codeLength, attemptsNum);
+        return new GameConfig(codeLength, attemptsNum);
     }
 
     public int getCodeLength() {

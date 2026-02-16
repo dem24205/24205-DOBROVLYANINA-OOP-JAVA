@@ -12,6 +12,16 @@ public class Generator {
         this.digitsNumber = digitsNumber;
     }
 
+    /**
+     * Генерирует случайное число с неповторяющимися цифрами
+     * @return строка из digitsNumber неповторяющихся цифр
+     */
+    public String generate() {
+        List<Integer> digits = createDigitsList();
+        Collections.shuffle(digits);
+        return convertToString(digits);
+    }
+
     private List<Integer> createDigitsList() {
         List<Integer> digits = new ArrayList<>(TOTAL_DIGITS);
         for (int i = 0; i < TOTAL_DIGITS; ++i) {
@@ -26,11 +36,5 @@ public class Generator {
             sb.append(digits.get(i));
         }
         return sb.toString();
-    }
-
-    public String generate() {
-        List<Integer> digits = createDigitsList();
-        Collections.shuffle(digits);
-        return convertToString(digits);
     }
 }
