@@ -25,7 +25,8 @@ public class InputHandler {
             if (result.isValid()) {
                 return input;
             }
-            logger.info("Invalid input: " + input + " - " + result.getErrorMessage());
+            logger.warning("Invalid input: " + input + " - " + result.getErrorMessage());
+            //logger.info();
             System.out.println(result.getErrorMessage());
         }
     }
