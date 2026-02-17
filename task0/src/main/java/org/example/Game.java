@@ -1,6 +1,7 @@
 package org.example;
 
-import java.util.logging.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Game {
     private final String answer;
@@ -8,7 +9,7 @@ public class Game {
     private boolean isGameWon;
     private final InputHandler inputHandler;
     private Guess guess;
-    private static final Logger logger = LoggerManager.getLogger(Game.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(Game.class);
 
     public Game(GameConfig config) {
         Generator gen = new Generator(config.getCodeLength());
@@ -17,10 +18,10 @@ public class Game {
         this.isGameWon = false;
         this.inputHandler = new InputHandler(answer.length());
         this.guess = new Guess(0, 0);
-        logger.info("New game is started");
-        logger.info("Generated code: " + answer);
-        logger.info("Code length: " + answer.length());
-        logger.info("Attempts: " + attemptsNum);
+        log.info("New game is started");
+        log.debug("Generated code: {}", answer);
+        log.debug("Code length: {}", answer.length());
+        log.debug("Attempts: {}", attemptsNum);
     }
 
     /**
@@ -28,59 +29,54 @@ public class Game {
      * Игрок вводит числа, получает подсказки, пока не угадает код или не кончатся попытки
      */
     public void run() {
-        logger.info("Session start");
+        log.debug("Session start");
         printGreeting();
         for (int i = 0; i < attemptsNum; ++i) {
             int attempt = i + 1;
             printAttempt(attempt);
             String inputCode = inputHandler.readPlayerInput();
-            logger.info("Attempt #" + attempt + ": " + inputCode);
             if (answer.equals(inputCode)) {
                 isGameWon = true;
-                logger.info("Victory");
-                logger.info("Number of attempts was needed: " + attempt);
+                log.debug("Victory");
+                log.debug("Number of attempts was needed: {}", attempt);
                 printWinMessage();
                 return;
             }
             else {
                 this.guess = GameEngine.calculateBullsAndCows(answer, inputCode);
-                logger.info("Result: "
-                        + guess.getBulls() + " bulls, "
-                        + guess.getCows() + " cows");
                 printHint();
             }
         }
         if (!isGameWon) {
-            logger.info("Defeat");
+            log.debug("Defeat");
             printLoseMessage();
         }
-        logger.info("Session end");
+        log.debug("Session end");
     }
 
     private void printGreeting() {
-        System.out.println("Welcome to Cows and Bulls game!");
-        System.out.println("Try to guess " + answer.length() + "-digit code.");
-        System.out.println("You have " + attemptsNum + " attempts.");
-        System.out.println("Good luck!");
+        log.info("Welcome to Cows and Bulls game!");
+        log.info("Try to guess {}-digit code.", answer.length());
+        log.info("You have {} attempts.", attemptsNum);
+        log.info("Good luck!");
     }
 
     private void printHint() {
-        System.out.println("Number of bulls: " + this.guess.getBulls() + "\n" +
-                "Number of cows: " + this.guess.getCows() + "\n");
+        log.info("Number of bulls: {}\nNumber of cows: {}\n", this.guess.getBulls(), this.guess.getCows());
     }
 
     private void printWinMessage() {
-        System.out.println("Congratulations!");
-        System.out.println("You guessed the code: " + answer);
+        log.info("Congratulations!");
+        log.info("You guessed the code: {}", answer);
     }
 
     private void printLoseMessage() {
-        System.out.println("Game over!");
-        System.out.println("You've used all attempts!");
-        System.out.println("The secret code was: " + answer);
+        log.info("Game over!");
+        log.info("You've used all attempts!");
+        log.info("The secret code was: {}", answer);
     }
 
     private void printAttempt(int attempt) {
-        System.out.println("Attempt: " + attempt);
+        log.info("Attempt: {}", attempt);
     }
 }

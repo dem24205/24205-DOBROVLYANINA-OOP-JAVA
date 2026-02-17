@@ -40,6 +40,10 @@ public class GameConfig {
             return defaultConfig();
         }
 
+        if (args.length != 2) {
+            throw new IllegalArgumentException("Expected exactly 2 arguments, got: " + args.length);
+        }
+
         int codeLength = DEFAULT_CODE_LENGTH;
         int attemptsNum = DEFAULT_ATTEMPTS_NUM;
         Pattern codePattern = Pattern.compile("-d=(\\d+)");

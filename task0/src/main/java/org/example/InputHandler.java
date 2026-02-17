@@ -1,12 +1,13 @@
 package org.example;
 
-import java.util.logging.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Scanner;
 
 public class InputHandler {
     private final Scanner scanner;
     private final InputValidator validator;
-    private static final Logger logger = LoggerManager.getLogger(InputHandler.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(InputHandler.class);
 
     public InputHandler(int codeLength) {
         this.scanner = new Scanner(System.in);
@@ -19,15 +20,14 @@ public class InputHandler {
      */
     public String readPlayerInput() {
         while (true) {
-            System.out.print("Enter code: ");
+            log.info("Enter code: ");
             String input = scanner.nextLine().trim();
             InputValidator.ValidationResult result = validator.validate(input);
             if (result.isValid()) {
+                log.debug("Player entered valid code: {}", input);
                 return input;
             }
-            logger.warning("Invalid input: " + input + " - " + result.getErrorMessage());
-            //logger.info();
-            System.out.println(result.getErrorMessage());
+            log.warn("Invalid input: {} - {}", input, result.getErrorMessage());
         }
     }
 }

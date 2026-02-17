@@ -5,7 +5,6 @@ import java.util.Set;
 
 public class InputValidator {
     private final int answerLength;
-
     public InputValidator(int length) {
         this.answerLength = length;
     }
@@ -17,17 +16,17 @@ public class InputValidator {
      */
     public ValidationResult validate(String input) {
         if (input == null) {
-            return ValidationResult.failure("Error: empty input");
+            return ValidationResult.failure("empty input");
         }
         if (input.length() != answerLength) {
-            return ValidationResult.failure("Error: incorrect code length");
+            return ValidationResult.failure("incorrect code length");
 
         }
         if (!validatePermissibleSymbols(input)) {
-            return ValidationResult.failure("Error: only digits are allowed");
+            return ValidationResult.failure( "only digits are allowed");
         }
         if(!validateUniqueDigits(input)) {
-            return ValidationResult.failure("Error: only unique digits are allowed");
+            return ValidationResult.failure("only unique digits are allowed");
         }
         return ValidationResult.success(input);
     }

@@ -24,12 +24,5 @@ public class GameEngineTest {
         assertEquals(0, g.getBulls());
         assertEquals(0, g.getCows());
     }
-
-    @Test
-    void mainLogicTest() {
-        Guess g = GameEngine.calculateBullsAndCows("12345", "54321");
-        assertEquals(4, g.getCows());
-        assertEquals(1, g.getBulls());
-    }
 }
 

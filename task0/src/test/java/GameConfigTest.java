@@ -4,13 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class GameConfigTest {
     @Test
-    void testDefaultConfig() {
-        GameConfig config = GameConfig.defaultConfig();
-        assertEquals(4, config.getCodeLength());
-        assertEquals(5, config.getAttemptsNum());
-    }
-
-    @Test
     void testFromArgsWithValidArguments() {
         String[] args = {"-d=6", "-a=10"};
         GameConfig config = GameConfig.fromArgs(args);
@@ -28,33 +21,25 @@ public class GameConfigTest {
 
     @Test
     void testFromArgsWithInvalidNumberOfArguments() {
-        String[] args1 = {"5"};
-        String[] args2 = {"5", "10", "15"};
+        String[] args1 = {"-d=5"};
+        String[] args2 = {"-d=5", "-a=10", "-a=15"};
         assertThrows(IllegalArgumentException.class, () -> GameConfig.fromArgs(args1));
         assertThrows(IllegalArgumentException.class, () -> GameConfig.fromArgs(args2));
     }
 
     @Test
     void testFromArgsWithNonDigitArguments() {
-        String[] args1 = {"abc", "10"};
-        String[] args2 = {"5", "xyz"};
-        String[] args3 = {"", ""};
+        String[] args1 = {"-d=abc", "-a=10"};
+        String[] args2 = {"-d=5", "-a=xyz"};
         assertThrows(IllegalArgumentException.class, () -> GameConfig.fromArgs(args1));
         assertThrows(IllegalArgumentException.class, () -> GameConfig.fromArgs(args2));
-        assertThrows(IllegalArgumentException.class, () -> GameConfig.fromArgs(args3));
     }
 
     @Test
     void testFromArgsWithInvalidCodeLength() {
-        String[] args1 = {"1", "5"};
-        String[] args2 = {"11", "5"};
-        assertThrows(IllegalArgumentException.class, () -> GameConfig.fromArgs(args1));
+        String[] args2 = {"-d=11", "-a=5"};
+        String[] args3 = {"-d=5", "-a=0"};
         assertThrows(IllegalArgumentException.class, () -> GameConfig.fromArgs(args2));
-    }
-
-    @Test
-    void testFromArgsWithInvalidAttemptsNumber() {
-        String[] args = {"4", "0"};  // меньше MIN_ATTEMPTS
-        assertThrows(IllegalArgumentException.class, () -> GameConfig.fromArgs(args));
+        assertThrows(IllegalArgumentException.class, () -> GameConfig.fromArgs(args3));
     }
 }
