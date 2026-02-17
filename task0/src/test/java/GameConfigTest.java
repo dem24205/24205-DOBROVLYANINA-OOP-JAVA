@@ -12,7 +12,7 @@ public class GameConfigTest {
 
     @Test
     void testFromArgsWithValidArguments() {
-        String[] args = {"6", "10"};
+        String[] args = {"-d=6", "-a=10"};
         GameConfig config = GameConfig.fromArgs(args);
         assertEquals(6, config.getCodeLength());
         assertEquals(10, config.getAttemptsNum());
