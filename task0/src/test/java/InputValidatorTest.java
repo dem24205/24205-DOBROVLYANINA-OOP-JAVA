@@ -16,7 +16,7 @@ public class InputValidatorTest {
         InputValidator validator = new InputValidator(4);
         InputValidator.ValidationResult result = validator.validate(null);
         assertFalse(result.isValid());
-        assertEquals("Error: empty input", result.getErrorMessage());
+        assertEquals("empty input", result.getErrorMessage());
     }
 
     @Test
@@ -24,7 +24,7 @@ public class InputValidatorTest {
         InputValidator validator = new InputValidator(4);
         InputValidator.ValidationResult result = validator.validate("");
         assertFalse(result.isValid());
-        assertEquals("Error: incorrect code length", result.getErrorMessage());
+        assertEquals("incorrect code length", result.getErrorMessage());
     }
 
     @Test
@@ -32,7 +32,7 @@ public class InputValidatorTest {
         InputValidator validator = new InputValidator(4);
         InputValidator.ValidationResult result = validator.validate("123a");
         assertFalse(result.isValid());
-        assertEquals("Error: only digits are allowed", result.getErrorMessage());
+        assertEquals("only digits are allowed", result.getErrorMessage());
     }
 
     @Test
@@ -40,6 +40,6 @@ public class InputValidatorTest {
         InputValidator validator = new InputValidator(4);
         InputValidator.ValidationResult result = validator.validate("1233");
         assertFalse(result.isValid());
-        assertEquals("Error: only unique digits are allowed", result.getErrorMessage());
+        assertEquals("only unique digits are allowed", result.getErrorMessage());
     }
 }
