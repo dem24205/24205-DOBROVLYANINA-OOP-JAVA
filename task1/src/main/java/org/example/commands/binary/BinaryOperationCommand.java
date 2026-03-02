@@ -22,7 +22,7 @@ public class BinaryOperationCommand implements Command {
         try {
             elem1 = context.popFromStack();
         } catch (NoSuchElementException e) {
-            context.pushOnStack(elem1);
+            context.pushOnStack(elem2);
             throw new RuntimeException("Not enough elements to perform the operation");
         }
     }

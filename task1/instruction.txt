@@ -44,4 +44,4 @@ PUSH b
 PUSH c
 *
 PRINT
-SAVE output.json
+SAVE file_output.json
