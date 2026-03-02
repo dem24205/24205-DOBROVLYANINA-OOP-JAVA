@@ -45,3 +45,4 @@ PUSH c
 *
 PRINT
 SAVE file_output.json
+EXIT

@@ -25,7 +25,7 @@ public class SaveCommand implements Command {
             throw new RuntimeException("Usage: SAVE <filename.json>");
         }
         if (!args[0].matches(".*\\.json$")) {
-            throw new RuntimeException("Usage save <filename.json>");
+            throw new RuntimeException("Usage: SAVE <filename.json>");
         }
         CalculatorState state = new CalculatorState();
         state.setStack(context.getStack());
