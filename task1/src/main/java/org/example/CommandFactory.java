@@ -14,9 +14,18 @@ import java.util.jar.JarFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Фабрика для создания команд калькулятора.
+ * Загружает классы команд из JAR-файлов, указанных в конфигурационном файле.
+ */
 public class CommandFactory {
     private final Map<String, Class<?>> commandMap = new HashMap<>();
     private final Logger logger = LoggerFactory.getLogger(CommandFactory.class);
+
+    /**
+     * Создаёт фабрику и загружает все доступные команды.
+     * @throws Exception если не удалось загрузить ни одной команды
+     */
     public CommandFactory() throws Exception {
         loadCommandsFromConfig();
         if (commandMap.isEmpty()) {
@@ -24,14 +33,13 @@ public class CommandFactory {
         }
     }
 
+    /** Загружает список JAR-файлов из конфигурации и загружает команды из них. */
     private void loadCommandsFromConfig() {
         InputStream configStream = getClass().getResourceAsStream("/commands.config");
-
         if (configStream == null) {
             logger.error("Configuration file not found in resources");
             return;
         }
-
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(configStream))) {
             String jarPath;
             while ((jarPath = reader.readLine()) != null) {
@@ -46,6 +54,7 @@ public class CommandFactory {
         }
     }
 
+    /** Загружает все классы с аннотацией {@link CommandInfo} из указанного JAR-файла. */
     private void loadCommandsFromJar(String jarPath) {
         try (URLClassLoader classLoader = new URLClassLoader(new URL[]{new URL("file:" + jarPath)})){
             try (JarFile jarFile = new JarFile(jarPath)) {
@@ -54,15 +63,12 @@ public class CommandFactory {
                     JarEntry entry = entries.nextElement();
                     String entryName = entry.getName();
                     if (entryName.endsWith(".class")) {
-                        String className = entryName
-                                .replace('/', '.')
-                                .replace(".class", "");
+                        String className = entryName.replace('/', '.').replace(".class", "");
                         try {
                             Class<?> c = classLoader.loadClass(className);
                             CommandInfo info = c.getAnnotation(CommandInfo.class);
                             if (info != null) {
-                                String commandName = info.name();
-                                commandMap.put(commandName, c);
+                                commandMap.put(info.name(), c);
                             }
                         } catch (ClassNotFoundException e) {
                             logger.error("Class not found in JAR {}: {}", jarPath, className);
@@ -77,6 +83,13 @@ public class CommandFactory {
         }
     }
 
+    /**
+     * Создаёт экземпляр команды по её имени.
+     * @param commandName имя команды
+     * @return новый экземпляр команды
+     * @throws NoSuchElementException если команда не найдена
+     * @throws RuntimeException если не удалось создать экземпляр команды
+     */
     public Command createCommand(String commandName) throws Exception {
         Class<?> commandClass = commandMap.get(commandName);
         if (commandClass == null) {
@@ -84,8 +97,7 @@ public class CommandFactory {
         }
         try {
             return (Command) commandClass.getDeclaredConstructor().newInstance();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException("Failed to create command " + commandName);
         }
     }

@@ -3,6 +3,11 @@ package org.example.commands.binary;
 import org.example.Context;
 import org.example.CommandInfo;
 
+/**
+ * Команда деления.
+ * Формат: / (без аргументов)
+ * Делит второй элемент стека на первый (elem1 / elem2).
+ */
 @CommandInfo(name = "/")
 public class DivCommand extends BinaryOperationCommand {
     @Override

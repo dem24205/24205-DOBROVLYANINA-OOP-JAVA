@@ -10,6 +10,11 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
+/**
+ * Команда сохранения состояния калькулятора в JSON файл.
+ * Format: SAVE filename.json
+ * Сохраняет текущий стек, переменные и историю команд.
+ */
 @CommandInfo(name = "SAVE")
 public class SaveCommand implements Command {
     private static final ObjectMapper mapper = new ObjectMapper();

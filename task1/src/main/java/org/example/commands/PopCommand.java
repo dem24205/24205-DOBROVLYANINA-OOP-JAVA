@@ -5,6 +5,11 @@ import org.example.Context;
 import org.example.CommandInfo;
 import java.util.NoSuchElementException;
 
+/**
+ * Команда удаления верхнего элемента стека.
+ * Формат: POP [имя_переменной]
+ * Если указано имя переменной, сохраняет в неё удалённое значение.
+ */
 @CommandInfo(name = "POP")
 public class PopCommand implements Command {
     @Override

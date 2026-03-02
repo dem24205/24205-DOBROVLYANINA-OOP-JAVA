@@ -3,6 +3,11 @@ package org.example.commands.binary;
 import org.example.Context;
 import org.example.CommandInfo;
 
+/**
+ * Команда умножения.
+ * Формат: * (без аргументов)
+ * Умножает второй элемент стека на первый (elem1 * elem2).
+ */
 @CommandInfo(name = "*")
 public class MulCommand extends BinaryOperationCommand {
     @Override

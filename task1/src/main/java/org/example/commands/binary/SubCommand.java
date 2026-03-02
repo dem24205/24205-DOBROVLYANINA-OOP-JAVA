@@ -3,6 +3,11 @@ package org.example.commands.binary;
 import org.example.Context;
 import org.example.CommandInfo;
 
+/**
+ * Команда вычитания.
+ * Формат: - (без аргументов)
+ * Вычитает первый (верхний) элемент стека из второго (elem1 - elem2).
+ */
 @CommandInfo(name = "-")
 public class SubCommand extends BinaryOperationCommand {
     @Override

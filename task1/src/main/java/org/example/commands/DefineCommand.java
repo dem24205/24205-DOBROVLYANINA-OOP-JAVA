@@ -4,6 +4,11 @@ import org.example.Command;
 import org.example.Context;
 import org.example.CommandInfo;
 
+/**
+ * Команда определения переменной.
+ * Format: DEFINE name value
+ * Сохраняет переменную с указанным именем и числовым значением.
+ */
 @CommandInfo(name = "DEFINE")
 public class DefineCommand implements Command {
     @Override

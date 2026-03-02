@@ -1,10 +1,12 @@
 package org.example;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
+/**
+ * DTO для сохранения и загрузки состояния калькулятора.
+ * Содержит стек чисел, переменные и историю команд.
+ */
 public class CalculatorState {
     private List<Double> stack;
     private Map<String, Double> variables;

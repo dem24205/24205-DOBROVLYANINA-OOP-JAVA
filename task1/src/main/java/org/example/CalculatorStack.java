@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Stack;
 
+/**
+ * Обёртка над стеком для хранения чисел калькулятора.
+ * Предоставляет базовые операции со стеком.
+ */
 public class CalculatorStack {
     private final Stack<Double> stack = new Stack<>();
 

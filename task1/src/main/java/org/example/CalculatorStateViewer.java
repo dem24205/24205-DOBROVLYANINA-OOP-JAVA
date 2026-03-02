@@ -11,9 +11,20 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Графический просмотрщик сохранённых состояний калькулятора.
+ * Загружает JSON файл и отображает стек, переменные и историю команд.
+ */
 public class CalculatorStateViewer {
     private static final Logger logger = LoggerFactory.getLogger(CalculatorStateViewer.class);
 
+    /**
+     * Точка входа в программу.
+     * Принимает имя JSON файла как аргумент командной строки.
+     * Загружает состояние и отображает его в окне.
+     *
+     * @param args аргументы командной строки (первый аргумент - имя файла)
+     */
     public static void main(String[] args) {
         if (args.length == 0) {
             logger.warn("Usage: java CalculatorStateViewer <filename.json>");
@@ -47,13 +58,11 @@ public class CalculatorStateViewer {
                     stackModel.addElement(String.valueOf(value));
                 }
             }
-
             JScrollPane stackScroll = new JScrollPane(stackList);
             JPanel leftPanel = new JPanel(new BorderLayout());
             leftPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
             leftPanel.add(stackLabel, BorderLayout.NORTH);
             leftPanel.add(stackScroll, BorderLayout.CENTER);
-
 
             JLabel varsLabel = new JLabel("Variables");
             varsLabel.setFont(new Font("Monospaced", Font.BOLD, 14));
@@ -65,7 +74,6 @@ public class CalculatorStateViewer {
                     varsModel.addElement(key + " = " + state.getVariables().get(key));
                 }
             }
-
             JScrollPane varsScroll = new JScrollPane(varsList);
             JPanel centerPanel = new JPanel(new BorderLayout());
             centerPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -83,7 +91,6 @@ public class CalculatorStateViewer {
                     historyArea.append("> " + cmd + "\n");
                 }
             }
-
             JScrollPane historyScroll = new JScrollPane(historyArea);
             JPanel rightPanel = new JPanel(new BorderLayout());
             rightPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -95,12 +102,10 @@ public class CalculatorStateViewer {
             mainPanel.add(leftPanel);
             mainPanel.add(centerPanel);
             mainPanel.add(rightPanel);
-
             frame.add(mainPanel);
             frame.setVisible(true);
-
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            logger.error("Error loading file: {}", e.getMessage());
         }
     }
 }

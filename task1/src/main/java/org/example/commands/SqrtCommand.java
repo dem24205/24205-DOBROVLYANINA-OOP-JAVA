@@ -5,6 +5,11 @@ import org.example.Context;
 import org.example.CommandInfo;
 import java.util.NoSuchElementException;
 
+/**
+ * Команда извлечения квадратного корня.
+ * Формат: SQRT (без аргументов)
+ * Извлекает верхний элемент стека и помещает обратно его квадратный корень.
+ */
 @CommandInfo(name = "SQRT")
 public class SqrtCommand implements Command {
     @Override

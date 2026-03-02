@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Контекст выполнения команд калькулятора.
+ * Хранит текущее состояние: стек чисел, переменные и историю команд.
+ */
 public class Context {
     private final CalculatorStack calculatorStack = new CalculatorStack();
     private final VariableTable variableTable = new VariableTable();

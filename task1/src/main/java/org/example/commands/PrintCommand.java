@@ -6,6 +6,11 @@ import org.example.CommandInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Команда печати верхнего элемента стека.
+ * Формат: PRINT (без аргументов)
+ * Выводит значение через логгер (не удаляя из стека).
+ */
 @CommandInfo(name = "PRINT")
 public class PrintCommand implements Command {
     private static final Logger logger = LoggerFactory.getLogger(PrintCommand.class);

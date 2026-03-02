@@ -4,6 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Scanner;
 
+/**
+ * Команда печати верхнего элемента стека.
+ * Формат: PRINT (без аргументов)
+ * Выводит значение через логгер (не удаляя из стека).
+ */
 public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 

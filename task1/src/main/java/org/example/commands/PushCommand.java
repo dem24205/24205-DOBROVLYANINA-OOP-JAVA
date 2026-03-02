@@ -5,6 +5,12 @@ import org.example.Context;
 import org.example.CommandInfo;
 import java.util.NoSuchElementException;
 
+/**
+ * Команда помещения значения в стек.
+ * Format: PUSH number or PUSH name
+ * Если аргумент - число, помещает его в стек.
+ * Если аргумент - имя переменной, помещает её значение.
+ */
 @CommandInfo(name = "PUSH")
 public class PushCommand implements Command {
     @Override
