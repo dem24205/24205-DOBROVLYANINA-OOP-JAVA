@@ -1,0 +1,47 @@
+# 1. PUSH и POP
+PUSH 10
+PUSH 20
+POP
+PRINT
+# 2. Arithmetic operations
+PUSH 5
+PUSH 3
++
+PRINT
+PUSH 2
+-
+PRINT
+PUSH 4
+*
+PRINT
+PUSH 3
+/
+PRINT
+# 3. SQRT
+PUSH 16
+SQRT
+PRINT
+# 4. DEFINE
+DEFINE pi 3.14
+DEFINE r 5
+PUSH r
+PUSH r
+*
+PUSH pi
+*
+PRINT
+# 5. Division by zero
+PUSH 10
+PUSH 0
+/
+# 6. Complex expression
+DEFINE a 2
+DEFINE b 3
+DEFINE c 4
+PUSH a
+PUSH b
++
+PUSH c
+*
+PRINT
+SAVE output.json

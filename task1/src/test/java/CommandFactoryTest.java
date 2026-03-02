@@ -12,66 +12,72 @@ public class CommandFactoryTest {
     private CommandFactory commandFactory;
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         commandFactory = new CommandFactory();
     }
 
     @Test
-    public void testPushCommand() {
+    public void testPushCommand() throws Exception {
         Command command = commandFactory.createCommand("PUSH");
         Assert.assertEquals(PushCommand.class, command.getClass());
     }
 
     @Test
-    public void testPopCommand() {
+    public void testPopCommand() throws Exception {
         Command command = commandFactory.createCommand("POP");
         Assert.assertEquals(PopCommand.class, command.getClass());
     }
 
     @Test
-    public void testDefineCommand() {
+    public void testDefineCommand() throws Exception {
         Command command = commandFactory.createCommand("DEFINE");
         Assert.assertEquals(DefineCommand.class, command.getClass());
     }
 
     @Test
-    public void testSqrtCommand() {
+    public void testSqrtCommand() throws Exception {
         Command command = commandFactory.createCommand("SQRT");
         Assert.assertEquals(SqrtCommand.class, command.getClass());
     }
 
     @Test
-    public void testPrintCommand() {
+    public void testPrintCommand() throws Exception {
         Command command = commandFactory.createCommand("PRINT");
         Assert.assertEquals(PrintCommand.class, command.getClass());
     }
 
     @Test
-    public void testDivCommand() {
+    public void testDivCommand() throws Exception {
         Command command = commandFactory.createCommand("/");
         Assert.assertEquals(DivCommand.class, command.getClass());
     }
 
     @Test
-    public void testMulCommand() {
+    public void testMulCommand() throws Exception {
         Command command = commandFactory.createCommand("*");
         Assert.assertEquals(MulCommand.class, command.getClass());
     }
 
     @Test
-    public void testSubCommand() {
+    public void testSubCommand() throws Exception {
         Command command = commandFactory.createCommand("-");
         Assert.assertEquals(SubCommand.class, command.getClass());
     }
 
     @Test
-    public void testSumCommand() {
+    public void testSumCommand() throws Exception {
         Command command = commandFactory.createCommand("+");
         Assert.assertEquals(SumCommand.class, command.getClass());
     }
 
+    @Test
+    public void testSaveCommand() throws Exception {
+        Command command = commandFactory.createCommand("SAVE");
+        Assert.assertEquals(SaveCommand.class, command.getClass());
+    }
+
     @Test (expected = NoSuchElementException.class)
-    public void testUnknownCommand() {
+    public void testUnknownCommand() throws Exception {
         commandFactory.createCommand("UNKNOWN");
     }
 }

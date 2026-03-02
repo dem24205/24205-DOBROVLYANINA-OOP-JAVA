@@ -16,16 +16,16 @@ public class DivCommandTest {
 
     @Test
     public void testDivision() throws Exception {
-        context.pushOnStack(2);
         context.pushOnStack(10);
+        context.pushOnStack(2);
         divCommand.execute(context, new String[]{});
         Assert.assertEquals(5.0, context.popFromStack(), 0.0001);
     }
 
     @Test(expected = RuntimeException.class)
     public void testDivisionByZero() throws Exception {
-        context.pushOnStack(0);
         context.pushOnStack(10);
+        context.pushOnStack(0);
         divCommand.execute(context, new String[]{});
     }
 }

@@ -11,12 +11,12 @@ public class BinaryOperationCommand implements Command {
     @Override
     public void execute(Context context, String[] args) throws Exception {
         try {
-            elem1 = context.popFromStack();
+            elem2 = context.popFromStack();
         } catch (NoSuchElementException e) {
             throw new RuntimeException("Not enough elements to perform the operation");
         }
         try {
-            elem2 = context.popFromStack();
+            elem1 = context.popFromStack();
         } catch (NoSuchElementException e) {
             context.pushOnStack(elem1);
             throw new RuntimeException("Not enough elements to perform the operation");

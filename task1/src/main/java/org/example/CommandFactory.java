@@ -17,15 +17,19 @@ import org.slf4j.LoggerFactory;
 public class CommandFactory {
     private final Map<String, Class<?>> commandMap = new HashMap<>();
     private final Logger logger = LoggerFactory.getLogger(CommandFactory.class);
-    public CommandFactory() {
+    public CommandFactory() throws Exception {
         loadCommandsFromConfig();
+        if (commandMap.isEmpty()) {
+            throw new NoSuchElementException("Failed to create command factory");
+        }
     }
 
     private void loadCommandsFromConfig() {
         InputStream configStream = getClass().getResourceAsStream("/commands.config");
 
         if (configStream == null) {
-            throw new RuntimeException("Configuration file not found in resources");
+            logger.error("Configuration file not found in resources");
+            return;
         }
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(configStream))) {
@@ -73,7 +77,7 @@ public class CommandFactory {
         }
     }
 
-    public Command createCommand(String commandName) {
+    public Command createCommand(String commandName) throws Exception {
         Class<?> commandClass = commandMap.get(commandName);
         if (commandClass == null) {
             throw new NoSuchElementException("Command " + commandName + " not found");

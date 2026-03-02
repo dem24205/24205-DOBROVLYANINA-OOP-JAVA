@@ -1,8 +1,13 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class Context {
     private final CalculatorStack calculatorStack = new CalculatorStack();
     private final VariableTable variableTable = new VariableTable();
+    private final List<String> history = new ArrayList<>();
 
     public boolean isStackEmpty() {
         return calculatorStack.empty();
@@ -26,5 +31,21 @@ public class Context {
 
     public double getVariable(String name) throws Exception {
         return variableTable.get(name);
+    }
+
+    public void addToHistory(String command) {
+        history.add(command);
+    }
+
+    public List<String> getHistory() {
+        return new ArrayList<>(history);
+    }
+
+    public List<Double> getStack() {
+        return calculatorStack.getStack();
+    }
+
+    public Map<String, Double> getVariables() {
+        return variableTable.getTable();
     }
 }

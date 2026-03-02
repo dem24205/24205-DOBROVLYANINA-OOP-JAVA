@@ -13,8 +13,8 @@ public class DivCommand extends BinaryOperationCommand {
             throw new RuntimeException("Not enough elements to perform division");
         }
         if (elem2 == 0) {
-            context.pushOnStack(elem2);
             context.pushOnStack(elem1);
+            context.pushOnStack(elem2);
             throw new RuntimeException("Division by zero");
         }
         context.pushOnStack(elem1 / elem2);

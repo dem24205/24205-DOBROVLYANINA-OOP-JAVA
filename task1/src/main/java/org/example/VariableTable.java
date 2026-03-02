@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class VariableTable {
@@ -15,5 +16,9 @@ public class VariableTable {
             throw new NoSuchElementException("Variable not found: " + name);
         }
         return table.get(name);
+    }
+
+    public Map<String, Double> getTable() {
+        return new HashMap<>(table);
     }
 }

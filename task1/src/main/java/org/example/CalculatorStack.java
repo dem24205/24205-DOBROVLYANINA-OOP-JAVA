@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Stack;
 
@@ -26,5 +28,9 @@ public class CalculatorStack {
 
     public boolean empty() {
         return stack.empty();
+    }
+
+    public List<Double> getStack() {
+        return new ArrayList<>(stack);
     }
 }

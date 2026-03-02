@@ -19,6 +19,6 @@ public class SubCommandTest {
         context.pushOnStack(10);
         context.pushOnStack(3);
         subCommand.execute(context, new String[]{});
-        Assert.assertEquals(-7.0, context.popFromStack(), 0.0001);
+        Assert.assertEquals(7.0, context.popFromStack(), 0.0001);
     }
 }
