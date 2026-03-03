@@ -1,5 +1,5 @@
-import org.example.commands.*;
 import org.example.Context;
+import org.example.commands.PopCommand;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,5 +1,3 @@
-import org.example.commands.*;
-import org.example.commands.binary.*;
 import org.example.InputParser;
 import org.junit.Assert;
 import org.junit.Before;

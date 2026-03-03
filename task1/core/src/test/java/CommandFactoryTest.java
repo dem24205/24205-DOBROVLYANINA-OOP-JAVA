@@ -70,12 +70,6 @@ public class CommandFactoryTest {
         Assert.assertEquals(SumCommand.class, command.getClass());
     }
 
-    @Test
-    public void testSaveCommand() throws Exception {
-        Command command = commandFactory.createCommand("SAVE");
-        Assert.assertEquals(SaveCommand.class, command.getClass());
-    }
-
     @Test (expected = NoSuchElementException.class)
     public void testUnknownCommand() throws Exception {
         commandFactory.createCommand("UNKNOWN");

@@ -1,5 +1,5 @@
-import org.example.commands.binary.*;
 import org.example.Context;
+import org.example.commands.binary.SubCommand;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
