@@ -74,4 +74,9 @@ public class CommandFactoryTest {
     public void testUnknownCommand() throws Exception {
         commandFactory.createCommand("UNKNOWN");
     }
+
+    @Test
+    public void SaveCommand() throws Exception {
+        commandFactory.createCommand("SAVE");
+    }
 }

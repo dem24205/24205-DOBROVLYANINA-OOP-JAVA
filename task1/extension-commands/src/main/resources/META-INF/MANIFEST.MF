@@ -1,5 +1,0 @@
-Manifest-Version: 1.0
-Class-Path: jackson-annotations-2.15.2.jar slf4j-api-2.0.9.jar logback-c
- ore-1.5.17.jar jackson-databind-2.15.2.jar jackson-core-2.15.2.jar logb
- ack-classic-1.5.17.jar
-

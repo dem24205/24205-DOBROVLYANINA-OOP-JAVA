@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+
+import org.example.commands.PrintCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,6 +71,7 @@ public class CommandFactory {
                             CommandInfo info = c.getAnnotation(CommandInfo.class);
                             if (info != null) {
                                 commandMap.put(info.name(), c);
+                                logger.debug("class: {} JAR: {}", info.name(), jarPath);
                             }
                         } catch (ClassNotFoundException e) {
                             logger.error("Class not found in JAR {}: {}", jarPath, className);
