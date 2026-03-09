@@ -5,9 +5,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.example.Command;
 import org.example.CommandFactory;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.NoSuchElementException;
 
+@RunWith(MockitoJUnitRunner.class)
 public class CommandFactoryTest {
     private CommandFactory commandFactory;
 

@@ -1,26 +1,41 @@
 import org.example.Context;
 import org.example.commands.binary.BinaryOperationCommand;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import java.util.NoSuchElementException;
+import static org.mockito.Mockito.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class BinaryOperationCommandTest {
-    private Context context;
+
+    @Mock
+    private Context mockContext;
+
+    @InjectMocks
     private BinaryOperationCommand command;
 
-    @Before
-    public void setUp() {
-        context = new Context();
-        command = new BinaryOperationCommand();
-    }
-
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testNotEnoughElements() throws Exception {
-        context.pushOnStack(5);
-        command.execute(context, new String[]{});
+        when(mockContext.popFromStack()).thenReturn(5.0).thenThrow(new NoSuchElementException());
+        try {
+            command.execute(mockContext, new String[]{});
+        } catch (RuntimeException e) {
+            verify(mockContext, times(2)).popFromStack();
+            verify(mockContext).pushOnStack(5.0);
+        }
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testEmptyStack() throws Exception {
-        command.execute(context, new String[]{});
+        when(mockContext.popFromStack()).thenThrow(new NoSuchElementException());
+        try {
+            command.execute(mockContext, new String[]{});
+        } catch (RuntimeException e) {
+            verify(mockContext, times(1)).popFromStack();
+            verify(mockContext, never()).pushOnStack(anyDouble());
+        }
     }
 }

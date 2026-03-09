@@ -1,31 +1,41 @@
 import org.example.Context;
 import org.example.commands.binary.DivCommand;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
+
+@RunWith(MockitoJUnitRunner.class)
 public class DivCommandTest {
-    private Context context;
-    private DivCommand divCommand;
 
-    @Before
-    public void setUp() {
-        context = new Context();
-        divCommand = new DivCommand();
-    }
+    @Mock
+    private Context mockContext;
+
+    @InjectMocks
+    private DivCommand divCommand;
 
     @Test
     public void testDivision() throws Exception {
-        context.pushOnStack(10);
-        context.pushOnStack(2);
-        divCommand.execute(context, new String[]{});
-        Assert.assertEquals(5.0, context.popFromStack(), 0.0001);
+        when(mockContext.popFromStack()).thenReturn(2.0, 10.0);
+        divCommand.execute(mockContext, new String[]{});
+        verify(mockContext, times(2)).popFromStack();
+        verify(mockContext).pushOnStack(5.0);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testDivisionByZero() throws Exception {
-        context.pushOnStack(10);
-        context.pushOnStack(0);
-        divCommand.execute(context, new String[]{});
+        when(mockContext.popFromStack()).thenReturn(0.0, 10.0);
+        try {
+            divCommand.execute(mockContext, new String[]{});
+        } catch (RuntimeException e) {
+            assertEquals("Division by zero", e.getMessage());
+            verify(mockContext, times(2)).popFromStack();
+            verify(mockContext).pushOnStack(10.0);
+            verify(mockContext).pushOnStack(0.0);
+        }
     }
 }

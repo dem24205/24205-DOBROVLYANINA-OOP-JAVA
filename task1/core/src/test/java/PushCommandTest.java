@@ -1,37 +1,53 @@
 import org.example.Context;
 import org.example.commands.PushCommand;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import java.util.NoSuchElementException;
+import static org.mockito.Mockito.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class PushCommandTest {
-    private Context context;
-    private PushCommand pushCommand;
 
-    @Before
-    public void setUp() {
-        context = new Context();
-        pushCommand = new PushCommand();
-    }
+    @Mock
+    private Context mockContext;
+
+    @InjectMocks
+    private PushCommand pushCommand;
 
     @Test
     public void testPushNumber() throws Exception {
         String[] args = {"42.5"};
-        pushCommand.execute(context, args);
-        Assert.assertEquals(42.5, context.peekStack(), 0.0001);
+        when(mockContext.getVariable("42.5")).thenThrow(new NoSuchElementException());
+        pushCommand.execute(mockContext, args);
+        verify(mockContext).getVariable("42.5");
+        verify(mockContext).pushOnStack(42.5);
     }
 
     @Test
     public void testPushVariable() throws Exception {
-        context.setVariable("pi", 3.14159);
         String[] args = {"pi"};
-        pushCommand.execute(context, args);
-        Assert.assertEquals(3.14159, context.peekStack(), 0.0001);
+        when(mockContext.getVariable("pi")).thenReturn(3.14159);
+        pushCommand.execute(mockContext, args);
+        verify(mockContext).getVariable("pi");
+        verify(mockContext).pushOnStack(3.14159);
     }
 
     @Test(expected = RuntimeException.class)
     public void testPushInvalidArgument() throws Exception {
         String[] args = {"unknown"};
-        pushCommand.execute(context, args);
+        when(mockContext.getVariable("unknown")).thenThrow(new NoSuchElementException());
+        pushCommand.execute(mockContext, args);
+    }
+
+    @Test
+    public void testPushNegativeNumber() throws Exception {
+        String[] args = {"-10.5"};
+        when(mockContext.getVariable("-10.5")).thenThrow(new NoSuchElementException());
+        pushCommand.execute(mockContext, args);
+        verify(mockContext).getVariable("-10.5");
+        verify(mockContext).pushOnStack(-10.5);
     }
 }
