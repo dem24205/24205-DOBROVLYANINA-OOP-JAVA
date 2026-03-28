@@ -1,0 +1,36 @@
+package factory;
+
+import factory.details.Car;
+import static java.lang.Thread.sleep;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class Dealer extends Service implements Runnable{
+    private final Storage<Car> carStorage;
+    private final int number;
+    private final boolean logSale;
+    private static final Logger log = LoggerFactory.getLogger(Dealer.class);
+
+    public Dealer(Storage<Car> carStorage, int delay, int number, boolean logSale) {
+        super(delay);
+        this.carStorage = carStorage;
+        this.number = number + 1;
+        this.logSale = logSale;
+    }
+
+    public void run() {
+        while(!Thread.currentThread().isInterrupted()) {
+            try {
+                Car car = carStorage.get();
+              if (logSale) {
+                  log.info("Dealer {}: Car {} (Body {}, Motor {}, Accessory {})",
+                  number, car.getID(), car.getBodyID(), car.getMotorID(), car.getAccessoryID());
+                }
+                sleep(getDelay());
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                log.warn("Thread was interrupted");
+            }
+        }
+    }
+}

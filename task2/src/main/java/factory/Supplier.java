@@ -1,0 +1,50 @@
+package factory;
+
+import factory.details.Product;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import utilities.IDGenerator;
+
+import java.lang.reflect.Constructor;
+import static java.lang.Thread.sleep;
+
+public class Supplier<T extends Product> extends Service implements Runnable{
+    private final Storage<T> storage;
+    private final Class<T> detailClass;
+    private final Constructor<T> constructor;
+    private static final Logger log = LoggerFactory.getLogger(Supplier.class);
+
+    public Supplier(Class<T> detailClass, Storage<T> storage, int delay) {
+        super(delay);
+        this.detailClass = detailClass;
+        this.storage = storage;
+        try {
+            this.constructor = detailClass.getDeclaredConstructor(String.class);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public T createDetail() {
+        T detail;
+        try {
+            detail = constructor.newInstance(IDGenerator.generateID(detailClass));
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return detail;
+    }
+
+    public void run() {
+        while(!Thread.currentThread().isInterrupted()) {
+            try {
+                T detail = createDetail();
+                storage.put(detail);
+                sleep(getDelay());
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                log.warn("Thread was interrupted");
+            }
+        }
+    }
+}

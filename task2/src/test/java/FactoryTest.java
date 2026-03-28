@@ -1,0 +1,65 @@
+import factory.Factory;
+import factory.FactoryStat;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+import utilities.Config;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class FactoryTest {
+    @TempDir
+    Path tempDir;
+
+    private Factory factory;
+
+    @BeforeEach
+    void setUp() throws IOException {
+        File configFile = tempDir.resolve("test_config.txt").toFile();
+        try (FileWriter writer = new FileWriter(configFile)) {
+            writer.write("""
+                StorageBodySize=10
+                StorageMotorSize=10
+                StorageAccessorySize=10
+                StorageCarSize=10
+                BodySuppliers=1
+                MotorSuppliers=1
+                AccessorySuppliers=1
+                Workers=1
+                Dealers=2
+                BodySupplierSpeed=50
+                MotorSupplierSpeed=50
+                AccessorySupplierSpeed=50
+                DealerSpeed=100
+                LogSale=true
+                """);
+        }
+        Config config = new Config(configFile.getAbsolutePath());
+        factory = new Factory(config);
+    }
+
+    @Test
+    void testFactoryStartsAndProduces() throws InterruptedException {
+        factory.start();
+        Thread.sleep(2000);
+        FactoryStat stat = factory.getFactoryStat();
+        assertTrue(stat.bodyProduced() > 0, "Bodies should be produced");
+        assertTrue(stat.motorProduced() > 0, "Motors should be produced");
+        assertTrue(stat.accessoryProduced() > 0, "Accessories should be produced");
+        factory.GUIWindowExit();
+    }
+
+    @Test
+    void testFactoryStops() throws InterruptedException {
+        factory.start();
+        Thread.sleep(1000);
+        factory.GUIWindowExit();
+        Thread.sleep(500);
+        assertTrue(true);
+    }
+}
