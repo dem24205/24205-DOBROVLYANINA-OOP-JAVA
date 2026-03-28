@@ -24,7 +24,7 @@ public class Dealer extends Service implements Runnable{
                 Car car = carStorage.get();
               if (logSale) {
                   log.info("Dealer {}: Car {} (Body {}, Motor {}, Accessory {})",
-                  number, car.getID(), car.getBodyID(), car.getMotorID(), car.getAccessoryID());
+                  number, car.getId(), car.getBodyId(), car.getMotorId(), car.getAccessoryId());
                 }
                 sleep(getDelay());
             } catch (InterruptedException e) {
