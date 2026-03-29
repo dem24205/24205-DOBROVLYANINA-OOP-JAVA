@@ -48,9 +48,9 @@ class FactoryTest {
         factory.start();
         Thread.sleep(2000);
         FactoryStat stat = factory.getFactoryStat();
-        assertTrue(stat.bodyProduced() > 0, "Bodies should be produced");
-        assertTrue(stat.motorProduced() > 0, "Motors should be produced");
-        assertTrue(stat.accessoryProduced() > 0, "Accessories should be produced");
+        assertTrue(stat.bodiesProduced() > 0, "Bodies should be produced");
+        assertTrue(stat.motorsProduced() > 0, "Motors should be produced");
+        assertTrue(stat.accessoriesProduced() > 0, "Accessories should be produced");
         factory.GUIWindowExit();
     }
 }

@@ -11,15 +11,15 @@ AccessorySuppliers=5
 
 # Number of workers and dealers
 Workers=10
-Dealers=20
+Dealers=10
 
 # Supplier speeds (milliseconds)
-BodySupplierSpeed=2000
-MotorSupplierSpeed=1500
-AccessorySupplierSpeed=1000
+BodySupplierSpeed=2500
+MotorSupplierSpeed=2500
+AccessorySupplierSpeed=2500
 
 # Dealer speed (milliseconds)
-DealerSpeed=3000
+DealerSpeed=2500
 
 # Logging
 LogSale=true

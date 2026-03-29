@@ -90,12 +90,12 @@ class ConfigTest {
         assertEquals(1, config.getInt("BodySuppliers"));
         assertEquals(1, config.getInt("MotorSuppliers"));
         assertEquals(5, config.getInt("AccessorySuppliers"));
-        assertEquals(20, config.getInt("Dealers"));
+        assertEquals(10, config.getInt("Dealers"));
         assertEquals(10, config.getInt("Workers"));
-        assertEquals(2000, config.getInt("BodySupplierSpeed"));
-        assertEquals(1500, config.getInt("MotorSupplierSpeed"));
-        assertEquals(1000, config.getInt("AccessorySupplierSpeed"));
-        assertEquals(3000, config.getInt("DealerSpeed"));
+        assertEquals(2500, config.getInt("BodySupplierSpeed"));
+        assertEquals(2500, config.getInt("MotorSupplierSpeed"));
+        assertEquals(2500, config.getInt("AccessorySupplierSpeed"));
+        assertEquals(2500, config.getInt("DealerSpeed"));
         assertTrue(config.getBoolean("LogSale"));
     }
 }
