@@ -1,6 +1,5 @@
 package factory;
 
-import factory.details.Car;
 import factory.details.*;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -41,7 +40,7 @@ public class Storage<T extends Product> {
         return item;
     }
 
-    public boolean isFull() {
+    private boolean isFull() {
         return items.size() >= capacity;
     }
 

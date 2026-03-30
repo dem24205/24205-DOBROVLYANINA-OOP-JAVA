@@ -9,6 +9,7 @@ class ThreadPoolTest {
     @Test
     void testThreadPoolExecutesTasks() throws InterruptedException {
         ThreadPool pool = new ThreadPool(2, 5);
+        pool.start();
         AtomicInteger counter = new AtomicInteger(0);
         for (int i = 0; i < 10; i++) {
             pool.addTask(counter::incrementAndGet);
@@ -21,6 +22,7 @@ class ThreadPoolTest {
     @Test
     void testThreadPoolStops() throws InterruptedException {
         ThreadPool pool = new ThreadPool(2, 5);
+        pool.start();
         AtomicBoolean taskExecuted = new AtomicBoolean(false);
         pool.addTask(() -> {
             try {
@@ -39,6 +41,7 @@ class ThreadPoolTest {
     @Test
     void testThreadPoolStopsWithWaitingTasks() throws InterruptedException {
         ThreadPool pool = new ThreadPool(2, 5);
+        pool.start();
         AtomicInteger counter = new AtomicInteger(0);
         for (int i = 0; i < 5; i++) {
             pool.addTask(() -> {

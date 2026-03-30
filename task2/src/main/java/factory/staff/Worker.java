@@ -1,5 +1,6 @@
-package factory;
+package factory.staff;
 
+import factory.Storage;
 import factory.details.Accessory;
 import factory.details.Body;
 import factory.details.Car;

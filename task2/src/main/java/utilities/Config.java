@@ -2,27 +2,32 @@ package utilities;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.*;
 import java.util.Properties;
 
 public class Config {
     private final Properties properties;
     private static final Logger log = LoggerFactory.getLogger(Config.class);
+
     public Config(String path) {
         properties = new Properties();
-        try (FileInputStream fis = new FileInputStream(path)) {
-            properties.load(fis);
-        } catch (IOException e1) {
-            log.warn("Failed to open path as a stream");
-            try (InputStream dis = getClass().getResourceAsStream("/default_config.txt")) {
-                if (dis == null) {
-                    throw new RuntimeException("Default config not found");
-                }
-                properties.load(dis);
-            } catch (IOException e2) {
-                throw new RuntimeException("Cannot load any config");
+        if (path != null) {
+            try (FileInputStream fis = new FileInputStream(path)) {
+                properties.load(fis);
+                validateKeys();
+                return;
+            } catch (IOException e) {
+                log.warn("Failed to load config from: {}", path);
             }
+        }
+
+        try (InputStream dis = getClass().getResourceAsStream("/default_config.txt")) {
+            if (dis == null) {
+                throw new RuntimeException("Default config not found");
+            }
+            properties.load(dis);
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot load any config");
         }
         validateKeys();
     }
@@ -33,15 +38,13 @@ public class Config {
                 "StorageMotorSize",
                 "StorageAccessorySize",
                 "StorageCarSize",
-                "BodySuppliers",
-                "MotorSuppliers",
                 "AccessorySuppliers",
                 "Dealers",
                 "Workers",
-                "BodySupplierSpeed",
-                "MotorSupplierSpeed",
-                "AccessorySupplierSpeed",
-                "DealerSpeed",
+                "BodySupplierDelay",
+                "MotorSupplierDelay",
+                "AccessorySupplierDelay",
+                "DealerDelay",
                 "LogSale"
         };
 

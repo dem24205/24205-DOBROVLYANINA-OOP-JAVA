@@ -1,5 +1,6 @@
-package factory;
+package factory.staff;
 
+import factory.Storage;
 import factory.details.Accessory;
 import factory.details.Body;
 import factory.details.Car;
@@ -30,7 +31,7 @@ public class AssemblyPoint {
         return threadPool.getTaskQueueSize();
     }
 
-    public void stop() {
-        threadPool.stop();
-    }
+    public void start() { threadPool.start(); }
+
+    public void stop() { threadPool.stop(); }
 }

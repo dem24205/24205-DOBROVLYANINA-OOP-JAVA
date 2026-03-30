@@ -1,5 +1,7 @@
 package factory;
 
+import factory.staff.AssemblyPoint;
+
 public class Controller implements StorageObserver {
     private final AssemblyPoint assemblyPoint;
 

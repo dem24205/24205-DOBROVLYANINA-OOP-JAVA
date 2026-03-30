@@ -2,10 +2,10 @@ package factory;
 
 public record FactoryStat(int queueSize,
         int bodiesOnStorage,
-        long bodiesProduced,
+        int bodiesProduced,
         int motorsOnStorage,
-        long motorsProduced,
+        int motorsProduced,
         int accessoriesOnStorage,
-        long accessoriesProduced,
+        int accessoriesProduced,
         int carsOnStorage,
-        long carsProduced) {}
+        int carsProduced) {}

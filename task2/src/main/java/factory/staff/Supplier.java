@@ -1,18 +1,15 @@
-package factory;
+package factory.staff;
 
+import factory.Storage;
 import factory.details.Product;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 import utilities.IDGenerator;
-
 import java.lang.reflect.Constructor;
 import static java.lang.Thread.sleep;
 
-public class Supplier<T extends Product> extends Service implements Runnable{
+public class Supplier<T extends Product> extends Service implements Runnable {
     private final Storage<T> storage;
     private final Class<T> detailClass;
     private final Constructor<T> constructor;
-    private static final Logger log = LoggerFactory.getLogger(Supplier.class);
 
     public Supplier(Class<T> detailClass, Storage<T> storage, int delay) {
         super(delay);
@@ -35,6 +32,7 @@ public class Supplier<T extends Product> extends Service implements Runnable{
         return detail;
     }
 
+    @Override
     public void run() {
         while(!Thread.currentThread().isInterrupted()) {
             try {
@@ -43,7 +41,7 @@ public class Supplier<T extends Product> extends Service implements Runnable{
                 sleep(getDelay());
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                log.warn("Thread was interrupted");
+                break;
             }
         }
     }

@@ -1,4 +1,5 @@
-package factory;
+package factory.staff;
+
 public abstract class Service {
     private int delay;
 
@@ -6,11 +7,11 @@ public abstract class Service {
         this.delay = delay;
     }
 
-    public void setDelay(int speed) {
-        if (speed <= 0) {
+    public void setDelay(int delay) {
+        if (delay <= 0) {
             return;
         }
-        this.delay = speed;
+        this.delay = delay;
     }
 
     public int getDelay() {

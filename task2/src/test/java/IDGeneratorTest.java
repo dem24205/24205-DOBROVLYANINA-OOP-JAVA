@@ -10,7 +10,7 @@ public class IDGeneratorTest {
     void testGenerateUniqueIds() {
         Set<String> ids = new HashSet<>();
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 100; ++i) {
             String bodyId = IDGenerator.generateID(Body.class);
             String motorId = IDGenerator.generateID(Motor.class);
             String accessoryId = IDGenerator.generateID(Accessory.class);

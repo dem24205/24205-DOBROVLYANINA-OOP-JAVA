@@ -27,15 +27,13 @@ class FactoryTest {
                     StorageMotorSize=10
                     StorageAccessorySize=10
                     StorageCarSize=10
-                    BodySuppliers=1
-                    MotorSuppliers=1
                     AccessorySuppliers=5
                     Workers=5
                     Dealers=2
-                    BodySupplierSpeed=50
-                    MotorSupplierSpeed=50
-                    AccessorySupplierSpeed=50
-                    DealerSpeed=100
+                    BodySupplierDelay=50
+                    MotorSupplierDelay=50
+                    AccessorySupplierDelay=50
+                    DealerDelay=100
                     LogSale=true
                     """);
         }
@@ -51,6 +49,6 @@ class FactoryTest {
         assertTrue(stat.bodiesProduced() > 0, "Bodies should be produced");
         assertTrue(stat.motorsProduced() > 0, "Motors should be produced");
         assertTrue(stat.accessoriesProduced() > 0, "Accessories should be produced");
-        factory.GUIWindowExit();
+        factory.stop();
     }
 }

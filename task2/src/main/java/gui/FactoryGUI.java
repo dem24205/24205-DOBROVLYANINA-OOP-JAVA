@@ -10,8 +10,10 @@ import java.awt.event.WindowListener;
 import java.net.URL;
 
 public class FactoryGUI extends  JFrame implements ActionListener {
-    private final FactoryGUIListener factoryGUIListener;
-    private int curGridy = 1;
+    private final FactoryObserver factoryObserver;
+
+    private int currentRow = 1;
+
     private final ControlPanel bodySupSlider;
     private final ControlPanel motorSupSlider;
     private final ControlPanel accessorySupSlider;
@@ -21,8 +23,8 @@ public class FactoryGUI extends  JFrame implements ActionListener {
     private final JLabel carsProduced;
     private final JLabel tasksInQueue;
 
-    public FactoryGUI(FactoryGUIListener factoryGUIListener) {
-        this.factoryGUIListener = factoryGUIListener;
+    public FactoryGUI(FactoryObserver factoryObserver) {
+        this.factoryObserver = factoryObserver;
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Factory");
 
@@ -48,25 +50,25 @@ public class FactoryGUI extends  JFrame implements ActionListener {
         bodySupSlider = new ControlPanel(gbc, this,"Body sup");
         bodySupSlider.addChangeListener(e -> {
             int delay = bodySupSlider.getValue();
-            factoryGUIListener.setBodySupplierSpeed(delay);
+            factoryObserver.setBodySupplierDelay(delay);
         });
 
         motorSupSlider = new ControlPanel(gbc, this, "Motor sup");
         motorSupSlider.addChangeListener(e -> {
             int delay = motorSupSlider.getValue();
-            factoryGUIListener.setMotorSupplierSpeed(delay);
+            factoryObserver.setMotorSupplierDelay(delay);
         });
 
         accessorySupSlider = new ControlPanel(gbc, this, "Accessory sup");
         accessorySupSlider.addChangeListener(e -> {
             int delay = accessorySupSlider.getValue();
-            factoryGUIListener.setAccessorySupplierSpeed(delay);
+            factoryObserver.setAccessorySupplierDelay(delay);
         });
 
         dealerSlider = new ControlPanel(gbc, this, "Dealers");
         dealerSlider.addChangeListener(e -> {
             int delay = dealerSlider.getValue();
-            factoryGUIListener.setDealerSpeed(delay);
+            factoryObserver.setDealerDelay(delay);
         });
         gbc.gridy = 1;
         gbc.gridx = 2;
@@ -92,7 +94,7 @@ public class FactoryGUI extends  JFrame implements ActionListener {
 
             @Override
             public void windowClosing(WindowEvent e) {
-                factoryGUIListener.GUIWindowExit();
+                factoryObserver.stop();
                 dispose();
                 System.exit(0);
             }
@@ -127,7 +129,7 @@ public class FactoryGUI extends  JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        FactoryStat factoryStat = factoryGUIListener.getFactoryStat();
+        FactoryStat factoryStat = factoryObserver.getFactoryStat();
         bodySupSlider.setTotalProduced(factoryStat.bodiesProduced());
         bodySupSlider.setOnStorage(factoryStat.bodiesOnStorage());
 
@@ -142,9 +144,9 @@ public class FactoryGUI extends  JFrame implements ActionListener {
         carsOnStorage.setText("Cars on storage: " + factoryStat.carsOnStorage());
     }
 
-    public int getCurGridy() { return curGridy; }
+    public int getCurrentRow() { return currentRow; }
 
-    public void setCurGridy(int curGridy) {
-        this.curGridy = curGridy;
+    public void setCurrentRow(int currentRow) {
+        this.currentRow = currentRow;
     }
 }

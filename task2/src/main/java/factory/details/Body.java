@@ -1,7 +1,5 @@
 package factory.details;
 
 public class Body extends Product {
-    public Body(String id) {
-        super(id);
-    }
+    public Body(String id) { super(id); }
 }

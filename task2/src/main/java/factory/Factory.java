@@ -4,14 +4,18 @@ import factory.details.Accessory;
 import factory.details.Body;
 import factory.details.Car;
 import factory.details.Motor;
-import gui.FactoryGUIListener;
+import factory.staff.AssemblyPoint;
+import factory.staff.Dealer;
+import factory.staff.Supplier;
+import gui.FactoryObserver;
 import utilities.Config;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Factory implements FactoryGUIListener {
+public class Factory implements FactoryObserver {
     private final Config config;
+
     private Storage<Body> bodyStorage;
     private Storage<Motor> motorStorage;
     private Storage<Accessory> accessoryStorage;
@@ -21,7 +25,9 @@ public class Factory implements FactoryGUIListener {
     private Supplier<Motor> motorSupplier;
     private List<Supplier<Accessory>> accessorySuppliers;
     private List<Dealer> dealers;
+
     private AssemblyPoint assemblyPoint;
+
     private ArrayList<Thread> allThreads;
 
     private void initStorages() {
@@ -43,15 +49,15 @@ public class Factory implements FactoryGUIListener {
     }
 
     private void initSuppliers() {
-        int bodyDelay = config.getInt("BodySupplierSpeed");
+        int bodyDelay = config.getInt("BodySupplierDelay");
         bodySupplier = new Supplier<>(Body.class, bodyStorage, bodyDelay);
 
-        int motorDelay = config.getInt("MotorSupplierSpeed");
+        int motorDelay = config.getInt("MotorSupplierDelay");
         motorSupplier = new Supplier<>(Motor.class, motorStorage, motorDelay);
 
         accessorySuppliers = new ArrayList<>();
         int accessorySuppliersNum = config.getInt("AccessorySuppliers");
-        int accessoryDelay = config.getInt("AccessorySupplierSpeed");
+        int accessoryDelay = config.getInt("AccessorySupplierDelay");
         for (int i = 0; i < accessorySuppliersNum; ++i) {
             accessorySuppliers.add(new Supplier<>(Accessory.class, accessoryStorage, accessoryDelay));
         }
@@ -59,7 +65,7 @@ public class Factory implements FactoryGUIListener {
 
     private void initDealers() {
         int dealersNum = config.getInt("Dealers");
-        int dealerDelay = config.getInt("DealerSpeed");
+        int dealerDelay = config.getInt("DealerDelay");
         boolean logSale = config.getBoolean("LogSale");
         dealers = new ArrayList<>();
         for (int i = 0; i < dealersNum; ++i) {
@@ -74,6 +80,7 @@ public class Factory implements FactoryGUIListener {
         initDealers();
     }
 
+    @Override
     public void start() {
         allThreads = new ArrayList<>();
         Thread bodySupplierThread = new Thread(bodySupplier);
@@ -91,6 +98,7 @@ public class Factory implements FactoryGUIListener {
         }
 
         initAssemblePoint();
+        assemblyPoint.start();
         initController();
 
         for (Dealer dealer : dealers) {
@@ -100,6 +108,7 @@ public class Factory implements FactoryGUIListener {
         }
     }
 
+    @Override
     public FactoryStat getFactoryStat() {
         return new FactoryStat(assemblyPoint.getQueueSize(),
                 bodyStorage.getItemsNum(), bodyStorage.getTotalProduced(),
@@ -108,27 +117,32 @@ public class Factory implements FactoryGUIListener {
                 carStorage.getItemsNum(), carStorage.getTotalProduced());
     }
 
-    public void setDealerSpeed(int delay) {
+    @Override
+    public void setDealerDelay(int delay) {
         for (Dealer dealer : dealers) {
             dealer.setDelay(delay);
         }
     }
 
-    public void setAccessorySupplierSpeed(int delay) {
+    @Override
+    public void setAccessorySupplierDelay(int delay) {
         for (Supplier<Accessory> accessorySupplier : accessorySuppliers) {
             accessorySupplier.setDelay(delay);
         }
     }
 
-    public void setBodySupplierSpeed(int delay) {
+    @Override
+    public void setBodySupplierDelay(int delay) {
         bodySupplier.setDelay(delay);
     }
 
-    public void setMotorSupplierSpeed(int delay) {
+    @Override
+    public void setMotorSupplierDelay(int delay) {
         motorSupplier.setDelay(delay);
     }
 
-    public void GUIWindowExit() {
+    @Override
+    public void stop() {
         for (Thread thread : allThreads) {
             thread.interrupt();
         }
