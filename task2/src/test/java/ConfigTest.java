@@ -80,7 +80,7 @@ class ConfigTest {
         assertEquals(100, config.getInt("StorageCarSize"));
         assertEquals(5, config.getInt("AccessorySuppliers"));
         assertEquals(10, config.getInt("Dealers"));
-        assertEquals(10, config.getInt("Workers"));
+        assertEquals(15, config.getInt("Workers"));
         assertEquals(2500, config.getInt("BodySupplierDelay"));
         assertEquals(2500, config.getInt("MotorSupplierDelay"));
         assertEquals(2500, config.getInt("AccessorySupplierDelay"));

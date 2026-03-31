@@ -24,10 +24,10 @@ public class AssemblyPoint {
     }
 
     public void assembleCar() {
-        threadPool.addTask(new Worker(bodyStorage, motorStorage, accessoryStorage, carStorage));
+        threadPool.addTask(new AssembleCar(bodyStorage, motorStorage, accessoryStorage, carStorage));
     }
 
-    public int getQueueSize() {
+    public int getPendingOrders() {
         return threadPool.getTaskQueueSize();
     }
 

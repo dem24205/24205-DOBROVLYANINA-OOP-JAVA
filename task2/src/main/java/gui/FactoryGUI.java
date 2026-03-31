@@ -10,7 +10,7 @@ import java.awt.event.WindowListener;
 import java.net.URL;
 
 public class FactoryGUI extends  JFrame implements ActionListener {
-    private final FactoryObserver factoryObserver;
+    private final FactoryListener factoryObserver;
 
     private int currentRow = 1;
 
@@ -23,7 +23,7 @@ public class FactoryGUI extends  JFrame implements ActionListener {
     private final JLabel carsProduced;
     private final JLabel tasksInQueue;
 
-    public FactoryGUI(FactoryObserver factoryObserver) {
+    public FactoryGUI(FactoryListener factoryObserver) {
         this.factoryObserver = factoryObserver;
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Factory");

@@ -7,16 +7,10 @@ import java.util.Queue;
 public class Storage<T extends Product> {
     private final int capacity;
     private final Queue<T> items = new LinkedList<>();
-    private StorageObserver observer;
     private int totalProduced = 0;
 
-    public Storage(int capacity, StorageObserver observer) {
+    public Storage(int capacity) {
         this.capacity = capacity;
-        this.observer = observer;
-    }
-
-    public void setObserver(StorageObserver observer) {
-        this.observer = observer;
     }
 
     public synchronized void put(T item) throws InterruptedException {
@@ -29,9 +23,6 @@ public class Storage<T extends Product> {
     }
 
     public synchronized T get() throws InterruptedException {
-        if (observer != null) {
-            observer.onCarRemoved();
-        }
         while (items.isEmpty()) {
             wait();
         }
@@ -50,5 +41,9 @@ public class Storage<T extends Product> {
 
     public synchronized int getItemsNum() {
         return items.size();
+    }
+
+    public int getCapacity() {
+        return capacity;
     }
 }

@@ -1,11 +1,12 @@
 package threadpool;
 
+import factory.staff.Task;
 import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class ThreadPool {
-    private final BlockingQueue<Runnable> taskQueue;
+    private final BlockingQueue<Task> taskQueue;
     private final ArrayList<PooledThread> threads;
 
     private void createPooledThreads(int threadCount) {
@@ -21,7 +22,7 @@ public class ThreadPool {
         createPooledThreads(threadCount);
     }
 
-    public void addTask(Runnable task) {
+    public void addTask(Task task) {
         try {
             taskQueue.put(task);
         } catch (InterruptedException e) {

@@ -2,24 +2,22 @@ package factory;
 
 import factory.details.Accessory;
 import factory.details.Body;
-import factory.details.Car;
 import factory.details.Motor;
 import factory.staff.AssemblyPoint;
 import factory.staff.Dealer;
 import factory.staff.Supplier;
-import gui.FactoryObserver;
+import gui.FactoryListener;
 import utilities.Config;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Factory implements FactoryObserver {
+public class Factory implements FactoryListener {
     private final Config config;
 
     private Storage<Body> bodyStorage;
     private Storage<Motor> motorStorage;
     private Storage<Accessory> accessoryStorage;
-    private Storage<Car> carStorage;
+    private ObservableStorage carStorage;
 
     private Supplier<Body> bodySupplier;
     private Supplier<Motor> motorSupplier;
@@ -31,21 +29,20 @@ public class Factory implements FactoryObserver {
     private ArrayList<Thread> allThreads;
 
     private void initStorages() {
-        bodyStorage = new Storage<>(config.getInt("StorageBodySize"), null);
-        accessoryStorage = new Storage<>(config.getInt("StorageAccessorySize"), null);
-        motorStorage = new Storage<>(config.getInt("StorageMotorSize"), null);
-        carStorage = new Storage<>(config.getInt("StorageCarSize"), null);
+        bodyStorage = new Storage<>(config.getInt("StorageBodySize"));
+        accessoryStorage = new Storage<>(config.getInt("StorageAccessorySize"));
+        motorStorage = new Storage<>(config.getInt("StorageMotorSize"));
+        carStorage = new ObservableStorage(config.getInt("StorageCarSize"));
     }
 
     private void initAssemblePoint() {
         assemblyPoint = new AssemblyPoint(config.getInt("Workers"), bodyStorage,
                 motorStorage, accessoryStorage, carStorage);
-
     }
 
     private void initController() {
-        Controller controller = new Controller(assemblyPoint);
-        carStorage.setObserver(controller);
+        Controller controller = new Controller(assemblyPoint, carStorage);
+        carStorage.register(controller);
     }
 
     private void initSuppliers() {
@@ -110,7 +107,7 @@ public class Factory implements FactoryObserver {
 
     @Override
     public FactoryStat getFactoryStat() {
-        return new FactoryStat(assemblyPoint.getQueueSize(),
+        return new FactoryStat(assemblyPoint.getPendingOrders(),
                 bodyStorage.getItemsNum(), bodyStorage.getTotalProduced(),
                 motorStorage.getItemsNum(), motorStorage.getTotalProduced(),
                 accessoryStorage.getItemsNum(), accessoryStorage.getTotalProduced(),

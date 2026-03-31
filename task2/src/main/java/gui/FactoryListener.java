@@ -2,7 +2,7 @@ package gui;
 
 import factory.FactoryStat;
 
-public interface FactoryObserver {
+public interface FactoryListener {
     void start();
     FactoryStat getFactoryStat();
     void setDealerDelay(int delay);

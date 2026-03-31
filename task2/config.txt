@@ -8,8 +8,8 @@ StorageCarSize=50
 AccessorySuppliers=3
 
 # Number of workers and dealers
-Workers=5
-Dealers=10
+Workers=10
+Dealers=5
 
 # Supplier delays (milliseconds)
 BodySupplierDelay=1500

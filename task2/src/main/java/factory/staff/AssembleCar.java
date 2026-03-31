@@ -7,22 +7,21 @@ import factory.details.Car;
 import factory.details.Motor;
 import utilities.IDGenerator;
 
-public class Worker implements Runnable {
+public class AssembleCar implements Task {
     private final Storage<Body> bodyStorage;
     private final Storage<Motor> motorStorage;
     private final Storage<Accessory> accessoryStorage;
     private final Storage<Car> carStorage;
 
-    public Worker(Storage<Body> bodyStorage, Storage<Motor> motorStorage,
-                  Storage<Accessory> accessoryStorage, Storage<Car> carStorage) {
+    public AssembleCar(Storage<Body> bodyStorage, Storage<Motor> motorStorage,
+                       Storage<Accessory> accessoryStorage, Storage<Car> carStorage) {
         this.bodyStorage = bodyStorage;
         this.motorStorage = motorStorage;
         this.accessoryStorage = accessoryStorage;
         this.carStorage = carStorage;
     }
 
-    @Override
-    public void run() {
+    public void execute() {
         try {
             Body body = bodyStorage.get();
             Motor motor = motorStorage.get();
