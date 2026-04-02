@@ -38,6 +38,8 @@ public class Config {
                 "StorageMotorSize",
                 "StorageAccessorySize",
                 "StorageCarSize",
+                "BodySuppliers",
+                "MotorSuppliers",
                 "AccessorySuppliers",
                 "Dealers",
                 "Workers",

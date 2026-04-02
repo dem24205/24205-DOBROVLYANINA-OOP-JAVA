@@ -19,8 +19,8 @@ public class Factory implements FactoryListener {
     private Storage<Accessory> accessoryStorage;
     private ObservableStorage carStorage;
 
-    private Supplier<Body> bodySupplier;
-    private Supplier<Motor> motorSupplier;
+    private List<Supplier<Body>> bodySuppliers;
+    private List<Supplier<Motor>> motorSuppliers;
     private List<Supplier<Accessory>> accessorySuppliers;
     private List<Dealer> dealers;
 
@@ -46,12 +46,18 @@ public class Factory implements FactoryListener {
     }
 
     private void initSuppliers() {
+        bodySuppliers = new ArrayList<>();
+        int bodySuppliersNum = config.getInt("BodySuppliers");
         int bodyDelay = config.getInt("BodySupplierDelay");
-        bodySupplier = new Supplier<>(Body.class, bodyStorage, bodyDelay);
-
+        for (int i = 0; i < bodySuppliersNum; ++i) {
+            bodySuppliers.add(new Supplier<>(Body.class, bodyStorage, bodyDelay));
+        }
+        motorSuppliers = new ArrayList<>();
+        int motorSuppliersNum = config.getInt("MotorSuppliers");
         int motorDelay = config.getInt("MotorSupplierDelay");
-        motorSupplier = new Supplier<>(Motor.class, motorStorage, motorDelay);
-
+        for (int i = 0; i < motorSuppliersNum; ++i) {
+            motorSuppliers.add(new Supplier<>(Motor.class, motorStorage, motorDelay));
+        }
         accessorySuppliers = new ArrayList<>();
         int accessorySuppliersNum = config.getInt("AccessorySuppliers");
         int accessoryDelay = config.getInt("AccessorySupplierDelay");
@@ -80,24 +86,24 @@ public class Factory implements FactoryListener {
     @Override
     public void start() {
         allThreads = new ArrayList<>();
-        Thread bodySupplierThread = new Thread(bodySupplier);
-        allThreads.add(bodySupplierThread);
-        bodySupplierThread.start();
-
-        Thread motorSupplierThread = new Thread(motorSupplier);
-        allThreads.add(motorSupplierThread);
-        motorSupplierThread.start();
-
+        for (Supplier<Body> bodySupplier : bodySuppliers) {
+            Thread thread = new Thread(bodySupplier);
+            allThreads.add(thread);
+            thread.start();
+        }
+        for (Supplier<Motor> motorSupplier : motorSuppliers) {
+            Thread thread = new Thread(motorSupplier);
+            allThreads.add(thread);
+            thread.start();
+        }
         for (Supplier<Accessory> accessorySupplier : accessorySuppliers) {
             Thread thread = new Thread(accessorySupplier);
             allThreads.add(thread);
             thread.start();
         }
-
         initAssemblePoint();
         assemblyPoint.start();
         initController();
-
         for (Dealer dealer : dealers) {
             Thread thread = new Thread(dealer);
             allThreads.add(thread);
@@ -130,12 +136,16 @@ public class Factory implements FactoryListener {
 
     @Override
     public void setBodySupplierDelay(int delay) {
-        bodySupplier.setDelay(delay);
+        for (Supplier<Body> bodySupplier : bodySuppliers) {
+            bodySupplier.setDelay(delay);
+        }
     }
 
     @Override
     public void setMotorSupplierDelay(int delay) {
-        motorSupplier.setDelay(delay);
+        for (Supplier<Motor> motorSupplier : motorSuppliers) {
+            motorSupplier.setDelay(delay);
+        }
     }
 
     @Override

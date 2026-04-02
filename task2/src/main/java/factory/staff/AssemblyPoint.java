@@ -13,6 +13,7 @@ public class AssemblyPoint {
     private final Storage<Motor> motorStorage;
     private final Storage<Accessory> accessoryStorage;
     private final Storage<Car> carStorage;
+    private final int workersNum;
 
     public AssemblyPoint(int workersNum, Storage<Body> bodyStorage, Storage<Motor> motorStorage,
                          Storage<Accessory> accessoryStorage, Storage<Car> carStorage) {
@@ -21,6 +22,7 @@ public class AssemblyPoint {
         this.motorStorage = motorStorage;
         this.accessoryStorage = accessoryStorage;
         this.carStorage = carStorage;
+        this.workersNum = workersNum;
     }
 
     public void assembleCar() {
@@ -34,4 +36,6 @@ public class AssemblyPoint {
     public void start() { threadPool.start(); }
 
     public void stop() { threadPool.stop(); }
+
+    public int getWorkersNum() { return this.workersNum; }
 }

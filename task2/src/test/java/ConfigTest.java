@@ -20,6 +20,8 @@ class ConfigTest {
                 StorageMotorSize=100
                 StorageAccessorySize=100
                 StorageCarSize=100
+                BodySuppliers=3
+                MotorSuppliers=1
                 AccessorySuppliers=5
                 Dealers=20
                 Workers=10
@@ -36,6 +38,8 @@ class ConfigTest {
         assertEquals(100, config.getInt("StorageMotorSize"));
         assertEquals(100, config.getInt("StorageAccessorySize"));
         assertEquals(100, config.getInt("StorageCarSize"));
+        assertEquals(3, config.getInt("BodySuppliers"));
+        assertEquals(1, config.getInt("MotorSuppliers"));
         assertEquals(5, config.getInt("AccessorySuppliers"));
         assertEquals(20, config.getInt("Dealers"));
         assertEquals(10, config.getInt("Workers"));
@@ -55,6 +59,8 @@ class ConfigTest {
                 StorageMotorSize=100
                 StorageAccessorySize=100
                 StorageCarSize=100
+                BodySuppliers=3
+                MotorSuppliers=1
                 AccessorySuppliers=5
                 Dealers=20
                 Workers=10
@@ -78,6 +84,8 @@ class ConfigTest {
         assertEquals(100, config.getInt("StorageMotorSize"));
         assertEquals(100, config.getInt("StorageAccessorySize"));
         assertEquals(100, config.getInt("StorageCarSize"));
+        assertEquals(5, config.getInt("BodySuppliers"));
+        assertEquals(5, config.getInt("MotorSuppliers"));
         assertEquals(5, config.getInt("AccessorySuppliers"));
         assertEquals(10, config.getInt("Dealers"));
         assertEquals(15, config.getInt("Workers"));

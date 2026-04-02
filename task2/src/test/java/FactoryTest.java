@@ -27,6 +27,8 @@ class FactoryTest {
                     StorageMotorSize=10
                     StorageAccessorySize=10
                     StorageCarSize=10
+                    BodySuppliers=1
+                    MotorSuppliers=1
                     AccessorySuppliers=5
                     Workers=5
                     Dealers=2

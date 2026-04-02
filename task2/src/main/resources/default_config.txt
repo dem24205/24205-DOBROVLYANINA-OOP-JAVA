@@ -5,6 +5,8 @@ StorageAccessorySize=100
 StorageCarSize=100
 
 # Number of suppliers
+BodySuppliers=5
+MotorSuppliers=5
 AccessorySuppliers=5
 
 # Number of workers and dealers
